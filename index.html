@@ -1,0 +1,151 @@
+<!DOCTYPE html><html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jom Belajar Bahasa Arab</title><style>
+body {
+    font-family: Arial, sans-serif;
+    background: #f0f8ff;
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    color: #1769aa;
+    font-size: 30px;
+}
+
+p {
+    font-size: 19px;
+    color: #444;
+}
+
+.letters {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    max-width: 600px;
+    margin: 25px auto;
+}
+
+.letter {
+    background: white;
+    border-radius: 15px;
+    padding: 15px 5px;
+    font-size: 45px;
+    color: #333;
+    box-shadow: 0 3px 8px #ccc;
+    cursor: pointer;
+}
+
+.letter:active {
+    background: #d9ecff;
+}
+
+.controls button {
+    font-size: 20px;
+    padding: 13px 18px;
+    margin: 7px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.fatha { background: #ffcccc; }
+.damma { background: #cce5ff; }
+.kasra { background: #d5f5d0; }
+
+#display {
+    font-size: 110px;
+    margin: 20px;
+    min-height: 140px;
+}
+
+.base {
+    color: #1769aa;
+}
+
+.mark {
+    color: #e53935;
+}
+
+#sound {
+    background: #1769aa;
+    color: white;
+    font-size: 20px;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 12px;
+    margin: 10px;
+}
+</style></head><body><h1>🌟 Jom Belajar Bahasa Arab 🌟</h1><p>Pilih satu huruf Arab</p><div class="letters" id="letters"></div><h2>Pilih Baris</h2><div class="controls">
+    <button class="fatha" onclick="chooseMark('َ','Fathah')">
+        Fathah َ
+    </button><button class="damma" onclick="chooseMark('ُ','Dhammah')">
+    Dhammah ُ
+</button>
+
+<button class="kasra" onclick="chooseMark('ِ','Kasrah')">
+    Kasrah ِ
+</button>
+
+</div><h2>Sebutannya</h2><div id="display"></div><button id="sound" onclick="speak()">🔊 Dengar Sebutan</button>
+
+<p id="lesson">Mari kita belajar bersama!</p><script>
+
+const alphabet = [
+'ا','ب','ت','ث','ج','ح','خ',
+'د','ذ','ر','ز','س','ش','ص',
+'ض','ط','ظ','ع','غ','ف','ق',
+'ك','ل','م','ن','ه','و','ي'
+];
+
+let selectedLetter = 'ا';
+let selectedMark = 'َ';
+let selectedName = 'Fathah';
+
+const lettersBox = document.getElementById('letters');
+
+alphabet.forEach(letter => {
+    const item = document.createElement('div');
+    item.className = 'letter';
+    item.textContent = letter;
+
+    item.onclick = () => {
+        selectedLetter = letter;
+        updateDisplay();
+    };
+
+    lettersBox.appendChild(item);
+});
+
+function chooseMark(mark, name) {
+    selectedMark = mark;
+    selectedName = name;
+    updateDisplay();
+}
+
+function updateDisplay() {
+    document.getElementById('display').innerHTML =
+        `<span class="base">${selectedLetter}</span><span class="mark">${selectedMark}</span>`;
+
+    document.getElementById('lesson').textContent =
+        'Bagus! Mari sebut huruf ini.';
+}
+
+function speak() {
+    let text = selectedLetter + selectedMark;
+
+    let speech = new SpeechSynthesisUtterance(text);
+    speech.lang = 'ar-SA';
+    speech.rate = 0.7;
+
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(speech);
+}
+
+updateDisplay();
+
+</script></body>
+</html>
